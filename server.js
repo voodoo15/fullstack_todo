@@ -1,27 +1,22 @@
 import express from 'express';
-const bodyParser = require('body-parser');
-const {
+import bodyParser from 'body-parser';
+import {
     graphqlExpress,
     graphiqlExpress
-} = require('apollo-server-express');
-const {
-    makeExecutableSchema
-} = require('graphql-tools');
+} from 'apollo-server-express';
+import schema from './schema.js';
 const server = express();
+const port = 4000;
 
-server.use(
-    '/graphiql',
-    bodyParser.json(),
-    graphiqlExpress({
-        endpointURL: '/graphql',
-    }),
-);
 
-server.use(
-    '/graphql',
-    graphqlExpress({})
-);
+server.use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql'
+}));
 
-server.listen(4000, () => {
-    console.log('listening on port 4000');
+server.use('/graphql', bodyParser.json(), graphqlExpress({
+    schema
+}));
+
+server.listen(port, () => {
+    console.log(`listening on port ${ port }`);
 });
