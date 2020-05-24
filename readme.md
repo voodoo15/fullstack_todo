@@ -9,4 +9,3 @@ The following stack will be used (MEAN or MERN):
 * Node
 * Apollo
 * GraphQL
-
